@@ -1,0 +1,30 @@
+body {
+}
+
+.form-container {
+  width: 400px;
+  margin: auto;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+footer a {
+  color: black;
+}
+
+.intro {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-button {
+  background-color: #f8f8f9 !important;
+  border-radius: 10px 10px 0 0 !important;
+}
