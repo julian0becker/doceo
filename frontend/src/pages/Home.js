@@ -7,6 +7,7 @@ import { UserContext } from "../context/user-context";
 import Friends from "./Friends";
 import Overview from "./Overview";
 import Requests from "./Requests";
+import EditProfile from "./EditProfile";
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -22,6 +23,9 @@ function Home() {
       break;
     case "requests":
       Component = Requests;
+      break;
+    case "edit":
+      Component = EditProfile;
       break;
     default:
       Component = ContentDisplay;

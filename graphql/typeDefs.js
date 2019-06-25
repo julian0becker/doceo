@@ -33,6 +33,17 @@ module.exports = gql`
     token: String!
     username: String!
     createdAt: String!
+    languages: Languages
+  }
+
+  type Languages {
+    speaking: [String!]!
+    learning: [String!]!
+  }
+
+  input LanguageInput {
+    speaking: [String!]!
+    learning: [String!]!
   }
 
   type Request {
@@ -54,6 +65,7 @@ module.exports = gql`
   type Query {
     getExercises(recipientId: ID!): [Exercise]
     getRequests(recipientId: ID!): [Request]
+    getProfileInformation(userId: ID!): User
   }
   type Mutation {
     createExercise(
@@ -70,5 +82,6 @@ module.exports = gql`
       recipients: [RecipientInput]
       language: String
     ): Request!
+    updateProfile(email: String!, languageInput: LanguageInput): User!
   }
 `;
