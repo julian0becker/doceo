@@ -21,34 +21,20 @@ function Dashboard() {
           centered
         />
       </Menu.Item>
-      <Menu.Item>
-        <Input placeholder="Filter..." />
-      </Menu.Item>
-      <Menu.Item>
-        <Menu.Menu>
-          <Menu.Item
-            name="exercises"
-            active={activeItem === "exercises"}
-            onClick={handleItemClick}
-          >
-            Exercises
-          </Menu.Item>
-          <Menu.Item
-            name="friends"
-            active={activeItem === "friends"}
-            onClick={handleItemClick}
-          >
-            Friends
-          </Menu.Item>
-        </Menu.Menu>
+      <Menu.Item
+        name="home"
+        active={activeItem === "home"}
+        onClick={handleItemClick}
+      >
+        Home
       </Menu.Item>
 
       <Menu.Item
-        name="create"
-        active={activeItem === "create"}
+        name="friends"
+        active={activeItem === "friends"}
         onClick={handleItemClick}
       >
-        Create Exercise
+        Friends
       </Menu.Item>
       <Menu.Item
         name="requests"
@@ -56,6 +42,13 @@ function Dashboard() {
         onClick={handleItemClick}
       >
         Requests
+      </Menu.Item>
+      <Menu.Item
+        name="exercises"
+        active={activeItem === "exercises"}
+        onClick={handleItemClick}
+      >
+        Exercises
       </Menu.Item>
 
       <Dropdown item text="More">

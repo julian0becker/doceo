@@ -5,13 +5,28 @@ import Body from "../components/Body";
 import Landingpage from "./Landingpage";
 import { UserContext } from "../context/user-context";
 import Friends from "./Friends";
+import Overview from "./Overview";
+import Requests from "./Requests";
 
 function Home() {
   const { user } = useContext(AuthContext);
   const { page } = useContext(UserContext);
 
   let Component;
-  page === "exercises" ? (Component = ContentDisplay) : (Component = Friends);
+  switch (page) {
+    case "home":
+      Component = Overview;
+      break;
+    case "friends":
+      Component = Friends;
+      break;
+    case "requests":
+      Component = Requests;
+      break;
+    default:
+      Component = ContentDisplay;
+      break;
+  }
 
   return (
     <React.Fragment>
