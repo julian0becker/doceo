@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
 
 const Exercise = require("../../models/Exercise");
+const Request = require("../../models/Request");
 const User = require("../../models/User");
 const {
   validateRegisterInput,
@@ -34,6 +35,16 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+    async getRequests(_, { recipientId }) {
+      try {
+        const request = await Request.find({
+          recipients: { $elemMatch: { recipientId } }
+        }).sort({ createdAt: -1 });
+        return request;
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   },
   Mutation: {
@@ -60,6 +71,28 @@ module.exports = {
 
       const exercise = await newExercise.save();
       return exercise;
+    },
+    async createRequest(
+      _,
+      { subject, description, recipients, language },
+      context
+    ) {
+      const { id, username } = checkAuth(context);
+
+      // checks for empty fields
+
+      const newRequest = new Request({
+        username,
+        user: id,
+        subject,
+        description,
+        recipients,
+        createdAt: new Date().toISOString(),
+        language
+      });
+
+      const request = await newRequest.save();
+      return request;
     },
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);

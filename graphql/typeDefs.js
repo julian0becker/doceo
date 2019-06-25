@@ -35,6 +35,16 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type Request {
+    id: ID!
+    username: String!
+    subject: String!
+    description: String
+    recipients: [Recipient!]!
+    createdAt: String
+    language: String
+  }
+
   input RegisterInput {
     username: String!
     password: String!
@@ -43,6 +53,7 @@ module.exports = gql`
   }
   type Query {
     getExercises(recipientId: ID!): [Exercise]
+    getRequests(recipientId: ID!): [Request]
   }
   type Mutation {
     createExercise(
@@ -53,5 +64,11 @@ module.exports = gql`
     ): Exercise!
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+    createRequest(
+      subject: String!
+      description: String
+      recipients: [RecipientInput]
+      language: String
+    ): Request!
   }
 `;
