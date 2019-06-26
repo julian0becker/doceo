@@ -2,6 +2,7 @@ const { AuthenticationError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 
+// extracts username, id, email if user is logged in
 module.exports = context => {
   const authHeader = context.req.headers.authorization;
   if (authHeader) {

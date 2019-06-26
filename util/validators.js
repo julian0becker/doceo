@@ -1,3 +1,4 @@
+//validates register and login inputs // use package?
 module.exports.validateRegisterInput = (
   username,
   email,
