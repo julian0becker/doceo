@@ -1,5 +1,6 @@
-config.js
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
@@ -11,6 +12,7 @@ node_modules
 /build
 
 # misc
+config.js
 .DS_Store
 .env.local
 .env.development.local
@@ -20,3 +22,27 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#Frontend
+# dependencies
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
+
+
+# testing
+/frontend/coverage
+
+# production
+/frontend/build
+
+# misc
+/frontend/.DS_Store
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
