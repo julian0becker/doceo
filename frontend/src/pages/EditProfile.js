@@ -29,16 +29,13 @@ function EditProfile() {
         <h1>loading...</h1>
       ) : (
         <React.Fragment>
-          {isFormOpen ? (
-            <EditProfileForm />
-          ) : (
-            <React.Fragment>
-              <ProfileDetails info={info} />
-              <Button secondary onClick={handleClick}>
-                Edit Profile
-              </Button>
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <ProfileDetails info={info} />
+            <Button secondary onClick={handleClick}>
+              Edit Profile
+            </Button>
+          </React.Fragment>
+          {isFormOpen && <EditProfileForm />}
         </React.Fragment>
       )}
     </div>
