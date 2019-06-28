@@ -8,13 +8,8 @@ import { AuthContext } from "../context/auth-context";
 function ContentDisplay() {
   const { user } = useContext(AuthContext);
 
-  let fetch;
-  let variable;
-  user ? (fetch = FETCH_EXERCISE_QUERY) : (fetch = FETCH_WELCOME_MESSAGE);
-  user ? (variable = user.id) : (variable = null);
-
-  const { loading, data } = useQuery(fetch, {
-    variables: { name: variable }
+  const { loading, data } = useQuery(FETCH_EXERCISE_QUERY, {
+    variables: { name: user.id }
   });
 
   return (
@@ -57,14 +52,6 @@ const FETCH_EXERCISE_QUERY = gql`
         sentence
         translation
       }
-    }
-  }
-`;
-
-const FETCH_WELCOME_MESSAGE = gql`
-  {
-    getExercises(recipientId: "5d0f239d10b2f90000950906") {
-      subject
     }
   }
 `;
