@@ -45,6 +45,14 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+    async getProfileInformation(_, { userId }) {
+      try {
+        const user = await User.findOne({ _id: userId });
+        return user;
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   },
   Mutation: {
@@ -154,7 +162,8 @@ module.exports = {
         email,
         username,
         password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        languages: null
       });
 
       const res = await newUser.save();
@@ -166,6 +175,22 @@ module.exports = {
         id: res._id,
         token
       };
+    },
+    async updateProfile(
+      _,
+      {
+        email,
+        languageInput: { speaking, learning }
+      },
+      context
+    ) {
+      const { id } = checkAuth(context);
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        { $set: { email, languages: { speaking, learning } } }
+      );
+
+      return updatedUser;
     }
   }
 };

@@ -53,7 +53,12 @@ function Dashboard() {
 
       <Dropdown item text="More">
         <Dropdown.Menu>
-          <Dropdown.Item icon="edit" text="Edit Profile" />
+          <Dropdown.Item
+            onClick={handleItemClick}
+            name="edit"
+            icon="edit"
+            text="Edit Profile"
+          />
           <Dropdown.Item icon="globe" text="Choose Language" />
           <Dropdown.Item icon="settings" text="Account Settings" />
         </Dropdown.Menu>
