@@ -8,6 +8,8 @@ import Friends from "./Friends";
 import Overview from "./Overview";
 import Requests from "./Requests";
 import EditProfile from "./EditProfile";
+import Modal from "../components/Modal";
+import { ModalProvider } from "../context/modal-context";
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -34,7 +36,10 @@ function Home() {
 
   return (
     <React.Fragment>
-      {user ? <Body content={Component} /> : <Landingpage />}
+      <ModalProvider>
+        {user ? <Body content={Component} /> : <Landingpage />}
+        <Modal />
+      </ModalProvider>
     </React.Fragment>
   );
 }

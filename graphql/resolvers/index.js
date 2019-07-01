@@ -146,7 +146,7 @@ module.exports = {
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
-      // TODO: Make sure user doesn't already exist
+
       const user = await User.findOne({ username });
       if (user) {
         throw new UserInputError("Username is taken", {
@@ -180,14 +180,22 @@ module.exports = {
       _,
       {
         email,
-        languageInput: { speaking, learning }
+        languageInput: {
+          speakingInput: { value, label },
+          learning
+        }
       },
       context
     ) {
       const { id } = checkAuth(context);
       const updatedUser = await User.findOneAndUpdate(
         { _id: id },
-        { $set: { email, languages: { speaking, learning } } }
+        {
+          $set: {
+            email,
+            languages: { speakingInput: { value, label }, learning }
+          }
+        }
       );
 
       return updatedUser;

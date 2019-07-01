@@ -50,19 +50,14 @@ function Dashboard() {
       >
         Exercises
       </Menu.Item>
-
-      <Dropdown item text="More">
-        <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={handleItemClick}
-            name="edit"
-            icon="edit"
-            text="Edit Profile"
-          />
-          <Dropdown.Item icon="globe" text="Choose Language" />
-          <Dropdown.Item icon="settings" text="Account Settings" />
-        </Dropdown.Menu>
-      </Dropdown>
+      <Menu.Item
+        onClick={handleItemClick}
+        name="edit"
+        active={activeItem === "edit"}
+        text="Edit Profile"
+      >
+        Settings
+      </Menu.Item>
     </Menu>
   );
 }

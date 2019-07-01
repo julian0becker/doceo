@@ -14,8 +14,12 @@
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-flags-select": "^1.1.10",
+    "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-select": "^3.0.4",
+    "react-select-country-list": "^2.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2"
   },

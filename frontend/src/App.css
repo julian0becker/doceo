@@ -28,3 +28,11 @@ footer a {
   background-color: #f8f8f9 !important;
   border-radius: 10px 10px 0 0 !important;
 }
+
+.editable {
+  cursor: pointer;
+}
+
+.select-speaking {
+  padding: 10px;
+}
