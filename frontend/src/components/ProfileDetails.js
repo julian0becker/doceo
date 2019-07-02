@@ -59,8 +59,8 @@ function ProfileDetails({ info }) {
             <Table.Cell>
               <div style={{ display: "flex" }}>
                 {info.languages.speaking.map(language => (
-                  <span key={language} style={{ paddingRight: "15px" }}>
-                    {language}
+                  <span key={language.value} style={{ paddingRight: "15px" }}>
+                    {language.value}
                   </span>
                 ))}
               </div>
@@ -78,8 +78,8 @@ function ProfileDetails({ info }) {
             <Table.Cell>
               <div style={{ display: "flex" }}>
                 {info.languages.learning.map(language => (
-                  <span key={language} style={{ paddingRight: "15px" }}>
-                    {language}
+                  <span key={language.value} style={{ paddingRight: "15px" }}>
+                    {language.value}
                   </span>
                 ))}
               </div>

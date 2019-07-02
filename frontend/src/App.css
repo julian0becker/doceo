@@ -35,4 +35,13 @@ footer a {
 
 .select-speaking {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.button-container-speaking {
+  display: flex;
+  justify-content: center;
 }

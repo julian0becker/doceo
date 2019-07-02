@@ -49,8 +49,14 @@ const FETCH_PROFILE_INFORMATION = gql`
       email
       createdAt
       languages {
-        speaking
-        learning
+        speaking {
+          value
+          label
+        }
+        learning {
+          value
+          label
+        }
       }
     }
   }
