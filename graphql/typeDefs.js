@@ -37,8 +37,8 @@ module.exports = gql`
   }
 
   type Languages {
-    speaking: [Speaking]!
-    learning: [Learning]!
+    speaking: [Speaking]
+    learning: [Learning]
   }
 
   input SpeakingInput {
@@ -52,13 +52,13 @@ module.exports = gql`
   }
 
   type Speaking {
-    value: String!
-    label: String!
+    value: String
+    label: String
   }
 
   type Learning {
-    value: String!
-    label: String!
+    value: String
+    label: String
   }
 
   type Request {
@@ -97,11 +97,6 @@ module.exports = gql`
       recipients: [RecipientInput]
       language: String
     ): Request!
-    updateProfile(
-      email: String
-      learning: [LearningInput]
-      speaking: [SpeakingInput]
-    ): User!
     updateSpeaking(speaking: [SpeakingInput!]!): User!
   }
 `;

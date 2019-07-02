@@ -1,29 +1,20 @@
-import React, { useContext, useState } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import React, { useContext } from "react";
+import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth-context";
 import ProfileDetails from "../components/ProfileDetails";
-import { Button } from "semantic-ui-react";
-import EditProfileForm from "../components/EditProfileForm";
-
 import gql from "graphql-tag";
+import { UserContext } from "../context/user-context";
 
 function EditProfile() {
   const { user } = useContext(AuthContext);
+  const { setLanguages } = useContext(UserContext);
 
-  const { data, error: err, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
+  const { data, error, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
     variables: { name: user.id }
   });
 
-  const [updatingProfile, { error }] = useMutation(UPDATE_PROFILE, {
-    variables: {
-      email: "lammm@updated.com",
-      speaking: ["last", "lastlast"],
-      learning: ["last", "rom"]
-    }
-  });
-
-  function createCallback() {
-    updatingProfile();
+  if (!loading) {
+    setLanguages(data.getProfileInformation.languages);
   }
 
   return (
@@ -34,9 +25,6 @@ function EditProfile() {
       ) : (
         <ProfileDetails info={data.getProfileInformation} />
       )}
-      <Button onClick={createCallback} secondary>
-        Edit Profile
-      </Button>
     </div>
   );
 }
@@ -57,24 +45,6 @@ const FETCH_PROFILE_INFORMATION = gql`
           value
           label
         }
-      }
-    }
-  }
-`;
-
-const UPDATE_PROFILE = gql`
-  mutation($email: String!, $speaking: [String!]!, $learning: [String!]!) {
-    updateProfile(
-      email: $email
-      languageInput: { speaking: $speaking, learning: $learning }
-    ) {
-      id
-      username
-      email
-      createdAt
-      languages {
-        speaking
-        learning
       }
     }
   }

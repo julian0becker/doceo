@@ -46,6 +46,7 @@ function AuthProvider(props) {
   function logout() {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("page");
+    localStorage.removeItem("languages");
     dispatch({ type: "LOGOUT" });
   }
 

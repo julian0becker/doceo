@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ModalContext } from "../../context/modal-context";
 import { countryList } from "../../util/languages-dropdown";
 import Select from "react-select";
 import { Table, Flag, Button } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { UserContext } from "../../context/user-context";
 
 export default function SpeakingModal() {
+  const { isOpen, openModal } = useContext(ModalContext);
+  const { languages } = useContext(UserContext);
   const [speaking, setSpeaking] = useState(null);
-  const [updatingSpeaking, { error }] = useMutation(UPDATE_SPEAKING);
+  const [updatingSpeaking, { error }] = useMutation(UPDATE_SPEAKING, {
+    variables: {
+      speaking: speaking
+    }
+  });
+
+  languages.speaking.forEach(language => {
+    delete language.__typename;
+  });
 
   const handleChange = selectedOption => {
     setSpeaking(selectedOption);
   };
 
   const handleOnclick = e => {
-    console.log("hi");
     updatingSpeaking();
+    openModal(!isOpen);
   };
-
-  console.log(speaking);
 
   return (
     <div className="select-speaking">
@@ -30,6 +40,7 @@ export default function SpeakingModal() {
           className="basic-multi-select"
           classNamePrefix="select"
           onChange={handleChange}
+          defaultValue={languages.speaking}
         />
         {speaking && (
           <Table stackable>
@@ -62,13 +73,8 @@ export default function SpeakingModal() {
 }
 
 const UPDATE_SPEAKING = gql`
-  mutation {
-    updateSpeaking(
-      speaking: [
-        { value: "jsj", label: "jss" }
-        { value: "hdhhdh", label: "dhddjjd" }
-      ]
-    ) {
+  mutation($speaking: [SpeakingInput!]!) {
+    updateSpeaking(speaking: $speaking) {
       email
     }
   }

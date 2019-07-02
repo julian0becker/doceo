@@ -1,10 +1,20 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../context/user-context";
-import { Menu, Image, Dropdown, Input } from "semantic-ui-react";
+import { Menu, Image, Flag } from "semantic-ui-react";
 
 function Dashboard() {
   const { page, setPage } = useContext(UserContext);
   const [activeItem, setActiveItem] = useState(page);
+  const { languages } = useContext(UserContext);
+  console.log(languages);
+
+  let length;
+  languages ? (length = languages.speaking.length - 3) : (length = null);
+
+  const flagDisplay = () => {
+    const selection = languages.speaking.slice(0, 3);
+    return selection.map(language => <Flag name={language.value} />);
+  };
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
@@ -20,6 +30,14 @@ function Dashboard() {
           circular
           centered
         />
+        {languages ? (
+          <div>
+            {flagDisplay()} {length > 0 ? <span>+{length}</span> : null}||
+            Learns
+          </div>
+        ) : (
+          <div>loading</div>
+        )}
       </Menu.Item>
       <Menu.Item
         name="home"

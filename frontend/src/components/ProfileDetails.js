@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Flag } from "semantic-ui-react";
 import moment from "moment";
-
 import { ModalContext } from "../context/modal-context";
 
 function ProfileDetails({ info }) {
   const { isOpen, openModal, changeModalType } = useContext(ModalContext);
 
   const handleOpenModal = e => {
-    openModal(!isOpen);
     switch (e.target.tagName) {
       case "I":
-        changeModalType(e.target.parentElement.parentElement.id);
+        e.target.className.includes("flag")
+          ? changeModalType(
+              e.target.parentElement.parentElement.parentElement.parentElement
+                .id
+            )
+          : changeModalType(e.target.parentElement.parentElement.id);
         break;
       case "SPAN":
         changeModalType(e.target.parentElement.parentElement.parentElement.id);
@@ -23,6 +26,7 @@ function ProfileDetails({ info }) {
         changeModalType(e.target.parentElement.id);
         break;
     }
+    openModal(!isOpen);
   };
 
   return (
@@ -60,7 +64,8 @@ function ProfileDetails({ info }) {
               <div style={{ display: "flex" }}>
                 {info.languages.speaking.map(language => (
                   <span key={language.value} style={{ paddingRight: "15px" }}>
-                    {language.value}
+                    <Flag name={language.value} />
+                    {language.label}
                   </span>
                 ))}
               </div>
@@ -79,7 +84,8 @@ function ProfileDetails({ info }) {
               <div style={{ display: "flex" }}>
                 {info.languages.learning.map(language => (
                   <span key={language.value} style={{ paddingRight: "15px" }}>
-                    {language.value}
+                    <Flag name={language.value} />
+                    {language.label}
                   </span>
                 ))}
               </div>

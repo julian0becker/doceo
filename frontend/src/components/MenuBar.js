@@ -2,17 +2,21 @@ import React, { useState, useContext } from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
+import { UserContext } from "../context/user-context";
 
 function MenuBar() {
   const { user, logout } = useContext(AuthContext);
   const pathname = window.location.pathname;
   const activeName = pathname === "/" ? "home" : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(activeName);
+  const { setLanguages, setPage } = useContext(UserContext);
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const handleLogout = () => {
     logout();
     setActiveItem("home");
+    setLanguages(null);
+    setPage("home");
   };
 
   const menubar = user ? (

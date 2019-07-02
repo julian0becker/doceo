@@ -176,20 +176,6 @@ module.exports = {
         token
       };
     },
-    async updateProfile(_, { email, speaking, learning }, context) {
-      const { id } = checkAuth(context);
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            email,
-            languages: { speaking, learning }
-          }
-        }
-      );
-
-      return updatedUser;
-    },
     async updateSpeaking(_, { speaking }, context) {
       const { id } = checkAuth(context);
       const updatedSpeaking = await User.findOneAndUpdate(
