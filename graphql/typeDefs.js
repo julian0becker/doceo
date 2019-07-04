@@ -28,11 +28,11 @@ module.exports = gql`
     translation: String!
   }
   type User {
-    id: ID!
-    email: String!
-    token: String!
-    username: String!
-    createdAt: String!
+    id: ID
+    email: String
+    token: String
+    username: String
+    createdAt: String
     languages: Languages
   }
 
@@ -80,7 +80,7 @@ module.exports = gql`
   type Query {
     getExercises(recipientId: ID!): [Exercise]
     getRequests(recipientId: ID!): [Request]
-    getProfileInformation(userId: ID!): User
+    getProfileInformation(userId: ID!): User!
   }
   type Mutation {
     createExercise(
@@ -98,5 +98,7 @@ module.exports = gql`
       language: String
     ): Request!
     updateSpeaking(speaking: [SpeakingInput!]!): User!
+    updateLearning(learning: [LearningInput!]!): User!
+    updateEmail(email: String!): User!
   }
 `;

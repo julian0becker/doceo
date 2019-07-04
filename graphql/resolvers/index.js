@@ -5,11 +5,13 @@ const { UserInputError } = require("apollo-server");
 const Exercise = require("../../models/Exercise");
 const Request = require("../../models/Request");
 const User = require("../../models/User");
+
 const {
   validateRegisterInput,
   validateLoginInput
 } = require("../../util/validators");
 const checkAuth = require("../../util/check-auth");
+
 const { SECRET_KEY } = require("../../config");
 
 function generateToken(user) {
@@ -178,16 +180,42 @@ module.exports = {
     },
     async updateSpeaking(_, { speaking }, context) {
       const { id } = checkAuth(context);
-      const updatedSpeaking = await User.findOneAndUpdate(
+      const updatedSpeaking = await User.update(
         { _id: id },
         {
           $set: {
-            languages: { speaking }
+            "languages.speaking": speaking
           }
         }
       );
 
       return updatedSpeaking;
+    },
+    async updateLearning(_, { learning }, context) {
+      const { id } = checkAuth(context);
+      const updatedLearning = await User.update(
+        { _id: id },
+        {
+          $set: {
+            "languages.learning": learning
+          }
+        }
+      );
+
+      return updatedLearning;
+    },
+    async updateEmail(_, { email }, context) {
+      const { id } = checkAuth(context);
+      const updatedEmail = await User.update(
+        { _id: id },
+        {
+          $set: {
+            email: email
+          }
+        }
+      );
+
+      return updatedEmail;
     }
   }
 };

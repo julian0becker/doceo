@@ -8,12 +8,26 @@ function Dashboard() {
   const { languages } = useContext(UserContext);
   console.log(languages);
 
-  let length;
-  languages ? (length = languages.speaking.length - 3) : (length = null);
+  let lengthSpeaking;
+  let lengthLearning;
+  languages
+    ? (lengthSpeaking = languages.speaking.length - 3)
+    : (lengthSpeaking = null);
+  languages
+    ? (lengthLearning = languages.learning.length - 3)
+    : (lengthLearning = null);
 
-  const flagDisplay = () => {
+  const flagDisplaySpeaking = () => {
     const selection = languages.speaking.slice(0, 3);
-    return selection.map(language => <Flag name={language.value} />);
+    return selection.map(language => (
+      <Flag className="dashboard-flag" name={language.value} />
+    ));
+  };
+  const flagDisplayLearning = () => {
+    const selection = languages.learning.slice(0, 3);
+    return selection.map(language => (
+      <Flag className="dashboard-flag" name={language.value} />
+    ));
   };
 
   const handleItemClick = (e, { name }) => {
@@ -31,9 +45,16 @@ function Dashboard() {
           centered
         />
         {languages ? (
-          <div>
-            {flagDisplay()} {length > 0 ? <span>+{length}</span> : null}||
-            Learns
+          <div className="dashboard-container">
+            <div className="dashboard-flag-container">
+              {flagDisplaySpeaking()}
+              {lengthSpeaking > 0 ? <span>+{lengthSpeaking}</span> : null}
+            </div>
+            <div>||</div>
+            <div className="dashboard-flag-container">
+              {flagDisplayLearning()}
+              {lengthLearning > 0 ? <span>+{lengthLearning}</span> : null}
+            </div>
           </div>
         ) : (
           <div>loading</div>

@@ -4,18 +4,22 @@ import { countryList } from "../../util/languages-dropdown";
 import Select from "react-select";
 import { Table, Flag, Button } from "semantic-ui-react";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { UserContext } from "../../context/user-context";
+import { AuthContext } from "../../context/auth-context";
 
 export default function SpeakingModal() {
   const { isOpen, openModal } = useContext(ModalContext);
-  const { languages } = useContext(UserContext);
+  const { languages, setLanguages } = useContext(UserContext);
   const [speaking, setSpeaking] = useState(null);
-  const [updatingSpeaking, { error }] = useMutation(UPDATE_SPEAKING, {
-    variables: {
-      speaking: speaking
-    }
-  });
+  // const { user } = useContext(AuthContext);
+
+  // const { data, error, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
+  //   variables: { name: user.id }
+  // });
+
+  // console.log("data", data.getProfileInformation.languages);
+  const [updatingSpeaking, { error: err }] = useMutation(UPDATE_SPEAKING);
 
   languages.speaking.forEach(language => {
     delete language.__typename;
@@ -26,7 +30,11 @@ export default function SpeakingModal() {
   };
 
   const handleOnclick = e => {
-    updatingSpeaking();
+    updatingSpeaking({
+      variables: {
+        speaking: speaking
+      }
+    });
     openModal(!isOpen);
   };
 
@@ -76,6 +84,23 @@ const UPDATE_SPEAKING = gql`
   mutation($speaking: [SpeakingInput!]!) {
     updateSpeaking(speaking: $speaking) {
       email
+    }
+  }
+`;
+
+const FETCH_PROFILE_INFORMATION = gql`
+  query($name: ID!) {
+    getProfileInformation(userId: $name) {
+      languages {
+        speaking {
+          value
+          label
+        }
+        learning {
+          value
+          label
+        }
+      }
     }
   }
 `;

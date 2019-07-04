@@ -33,7 +33,8 @@ footer a {
   cursor: pointer;
 }
 
-.select-speaking {
+.select-speaking,
+.select-learning {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -41,7 +42,22 @@ footer a {
   height: 100%;
 }
 
-.button-container-speaking {
+.button-container-speaking,
+.button-container-learning {
   display: flex;
   justify-content: center;
+}
+
+.dashboard-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-flag-container {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
