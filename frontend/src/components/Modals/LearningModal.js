@@ -3,19 +3,20 @@ import { ModalContext } from "../../context/modal-context";
 import { countryList } from "../../util/languages-dropdown";
 import Select from "react-select";
 import { Table, Flag, Button } from "semantic-ui-react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { UserContext } from "../../context/user-context";
+import { AuthContext } from "../../context/auth-context";
+import {
+  FETCH_PROFILE_INFORMATION_MODAL,
+  UPDATE_LEARNING
+} from "../../util/graphql";
 
 export default function SpeakingModal() {
   const { isOpen, openModal } = useContext(ModalContext);
-  const { languages, setLanguages } = useContext(UserContext);
+  const { languages } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
   const [learning, setLearning] = useState(null);
-  const [updatingLearning, { error }] = useMutation(UPDATE_LEARNING, {
-    variables: {
-      learning: learning
-    }
-  });
+  const [updatingLearning, { error }] = useMutation(UPDATE_LEARNING);
 
   languages.learning.forEach(language => {
     delete language.__typename;
@@ -25,11 +26,29 @@ export default function SpeakingModal() {
     setLearning(selectedOption);
   };
 
-  const handleOnclick = e => {
-    updatingLearning();
+  const handleApply = () => {
+    updatingLearning({
+      variables: {
+        learning: learning
+      },
+      update(store, result) {
+        const data = store.readQuery({
+          query: FETCH_PROFILE_INFORMATION_MODAL,
+          variables: { name: user.id }
+        });
+
+        data.getProfileInformation.languages.learning = [
+          ...result.data.updateLearning.languages.learning
+        ];
+
+        store.writeQuery({
+          query: FETCH_PROFILE_INFORMATION_MODAL,
+          variables: { name: user.id },
+          data: data
+        });
+      }
+    });
     openModal(!isOpen);
-    const temporaryLanguages = { ...languages, learning: learning };
-    setLanguages(temporaryLanguages);
   };
 
   return (
@@ -66,18 +85,10 @@ export default function SpeakingModal() {
         )}
       </div>
       <div className="button-container-learning">
-        <Button onClick={e => handleOnclick(e)} secondary>
+        <Button onClick={handleApply} secondary>
           Apply
         </Button>
       </div>
     </div>
   );
 }
-
-const UPDATE_LEARNING = gql`
-  mutation($learning: [LearningInput!]!) {
-    updateLearning(learning: $learning) {
-      email
-    }
-  }
-`;

@@ -19,13 +19,21 @@ function Dashboard() {
   const flagDisplaySpeaking = () => {
     const selection = languages.speaking.slice(0, 3);
     return selection.map(language => (
-      <Flag className="dashboard-flag" name={language.value} />
+      <Flag
+        key={language.value}
+        className="dashboard-flag"
+        name={language.value}
+      />
     ));
   };
   const flagDisplayLearning = () => {
     const selection = languages.learning.slice(0, 3);
     return selection.map(language => (
-      <Flag className="dashboard-flag" name={language.value} />
+      <Flag
+        key={language.value}
+        className="dashboard-flag"
+        name={language.value}
+      />
     ));
   };
 

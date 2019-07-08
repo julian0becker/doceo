@@ -1,14 +1,53 @@
 import gql from "graphql-tag";
 
-export const FETCH_PROFILE_INFORMATION = gql`
+export const FETCH_PROFILE_INFORMATION_MODAL = gql`
   query($name: ID!) {
     getProfileInformation(userId: $name) {
-      username
-      email(always: true)
-      createdAt
+      id
       languages {
-        speaking
-        learning
+        speaking {
+          value
+          label
+        }
+        learning {
+          value
+          label
+        }
+      }
+    }
+  }
+`;
+
+export const FETCH_PROFILE_INFORMATION_MODAL_EMAIL = gql`
+  query($name: ID!) {
+    getProfileInformation(userId: $name) {
+      id
+      email
+    }
+  }
+`;
+
+export const UPDATE_LEARNING = gql`
+  mutation($learning: [LearningInput!]!) {
+    updateLearning(learning: $learning) {
+      languages {
+        learning {
+          value
+          label
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_SPEAKING = gql`
+  mutation($speaking: [SpeakingInput!]!) {
+    updateSpeaking(speaking: $speaking) {
+      languages {
+        speaking {
+          value
+          label
+        }
       }
     }
   }

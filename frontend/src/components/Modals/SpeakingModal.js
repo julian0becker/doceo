@@ -1,20 +1,23 @@
 import React, { useState, useContext } from "react";
-import { ModalContext } from "../../context/modal-context";
-import { countryList } from "../../util/languages-dropdown";
+import { useMutation } from "@apollo/react-hooks";
 import Select from "react-select";
 import { Table, Flag, Button } from "semantic-ui-react";
-import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { ModalContext } from "../../context/modal-context";
 import { UserContext } from "../../context/user-context";
 import { AuthContext } from "../../context/auth-context";
+import {
+  FETCH_PROFILE_INFORMATION_MODAL,
+  UPDATE_SPEAKING
+} from "../../util/graphql";
+import { countryList } from "../../util/languages-dropdown";
 
 export default function SpeakingModal() {
   const { isOpen, openModal } = useContext(ModalContext);
-  const { languages, setLanguages } = useContext(UserContext);
+  const { languages } = useContext(UserContext);
   const [speaking, setSpeaking] = useState(null);
   const { user } = useContext(AuthContext);
 
-  const [updatingSpeaking, { error: err }] = useMutation(UPDATE_SPEAKING);
+  const [updatingSpeaking] = useMutation(UPDATE_SPEAKING);
 
   languages.speaking.forEach(language => {
     delete language.__typename;
@@ -24,26 +27,23 @@ export default function SpeakingModal() {
     setSpeaking(selectedOption);
   };
 
-  const handleOnclick = e => {
+  const handleApply = () => {
     updatingSpeaking({
       variables: {
         speaking: speaking
       },
       update(store, result) {
-        console.log("result", result.data.updateSpeaking.languages.speaking);
         const data = store.readQuery({
-          query: FETCH_PROFILE_INFORMATION,
+          query: FETCH_PROFILE_INFORMATION_MODAL,
           variables: { name: user.id }
         });
-        console.log("data", data.getProfileInformation.languages.speaking);
 
         data.getProfileInformation.languages.speaking = [
           ...result.data.updateSpeaking.languages.speaking
         ];
 
-        console.log("new data", data);
         store.writeQuery({
-          query: FETCH_PROFILE_INFORMATION,
+          query: FETCH_PROFILE_INFORMATION_MODAL,
           variables: { name: user.id },
           data: data
         });
@@ -86,41 +86,10 @@ export default function SpeakingModal() {
         )}
       </div>
       <div className="button-container-speaking">
-        <Button onClick={e => handleOnclick(e)} secondary>
+        <Button onClick={handleApply} secondary>
           Apply
         </Button>
       </div>
     </div>
   );
 }
-
-const UPDATE_SPEAKING = gql`
-  mutation($speaking: [SpeakingInput!]!) {
-    updateSpeaking(speaking: $speaking) {
-      languages {
-        speaking {
-          value
-          label
-        }
-      }
-    }
-  }
-`;
-
-const FETCH_PROFILE_INFORMATION = gql`
-  query($name: ID!) {
-    getProfileInformation(userId: $name) {
-      id
-      languages {
-        speaking {
-          value
-          label
-        }
-        learning {
-          value
-          label
-        }
-      }
-    }
-  }
-`;
