@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/user-context";
 import { Menu, Image, Flag } from "semantic-ui-react";
 
@@ -6,7 +6,6 @@ function Dashboard() {
   const { page, setPage } = useContext(UserContext);
   const [activeItem, setActiveItem] = useState(page);
   const { languages } = useContext(UserContext);
-  console.log(languages);
 
   let lengthSpeaking;
   let lengthLearning;
@@ -48,6 +47,7 @@ function Dashboard() {
           <div className="dashboard-container">
             <div className="dashboard-flag-container">
               {flagDisplaySpeaking()}
+
               {lengthSpeaking > 0 ? <span>+{lengthSpeaking}</span> : null}
             </div>
             <div>||</div>

@@ -180,39 +180,44 @@ module.exports = {
     },
     async updateSpeaking(_, { speaking }, context) {
       const { id } = checkAuth(context);
-      const updatedSpeaking = await User.update(
+      // const user = await User.findOne({ __id: id });
+
+      const updatedSpeaking = await User.findOneAndUpdate(
         { _id: id },
         {
           $set: {
             "languages.speaking": speaking
           }
-        }
+        },
+        { new: true }
       );
 
       return updatedSpeaking;
     },
     async updateLearning(_, { learning }, context) {
       const { id } = checkAuth(context);
-      const updatedLearning = await User.update(
+      const updatedLearning = await User.findOneAndUpdate(
         { _id: id },
         {
           $set: {
             "languages.learning": learning
           }
-        }
+        },
+        { new: true }
       );
 
       return updatedLearning;
     },
     async updateEmail(_, { email }, context) {
       const { id } = checkAuth(context);
-      const updatedEmail = await User.update(
+      const updatedEmail = await User.findOneAndUpdate(
         { _id: id },
         {
           $set: {
             email: email
           }
-        }
+        },
+        { new: true }
       );
 
       return updatedEmail;

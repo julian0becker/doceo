@@ -9,7 +9,7 @@ import { UserContext } from "../../context/user-context";
 
 export default function SpeakingModal() {
   const { isOpen, openModal } = useContext(ModalContext);
-  const { languages } = useContext(UserContext);
+  const { languages, setLanguages } = useContext(UserContext);
   const [learning, setLearning] = useState(null);
   const [updatingLearning, { error }] = useMutation(UPDATE_LEARNING, {
     variables: {
@@ -28,6 +28,8 @@ export default function SpeakingModal() {
   const handleOnclick = e => {
     updatingLearning();
     openModal(!isOpen);
+    const temporaryLanguages = { ...languages, learning: learning };
+    setLanguages(temporaryLanguages);
   };
 
   return (

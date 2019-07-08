@@ -12,13 +12,8 @@ export default function SpeakingModal() {
   const { isOpen, openModal } = useContext(ModalContext);
   const { languages, setLanguages } = useContext(UserContext);
   const [speaking, setSpeaking] = useState(null);
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  // const { data, error, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
-  //   variables: { name: user.id }
-  // });
-
-  // console.log("data", data.getProfileInformation.languages);
   const [updatingSpeaking, { error: err }] = useMutation(UPDATE_SPEAKING);
 
   languages.speaking.forEach(language => {
@@ -33,6 +28,25 @@ export default function SpeakingModal() {
     updatingSpeaking({
       variables: {
         speaking: speaking
+      },
+      update(store, result) {
+        console.log("result", result.data.updateSpeaking.languages.speaking);
+        const data = store.readQuery({
+          query: FETCH_PROFILE_INFORMATION,
+          variables: { name: user.id }
+        });
+        console.log("data", data.getProfileInformation.languages.speaking);
+
+        data.getProfileInformation.languages.speaking = [
+          ...result.data.updateSpeaking.languages.speaking
+        ];
+
+        console.log("new data", data);
+        store.writeQuery({
+          query: FETCH_PROFILE_INFORMATION,
+          variables: { name: user.id },
+          data: data
+        });
       }
     });
     openModal(!isOpen);
@@ -83,7 +97,12 @@ export default function SpeakingModal() {
 const UPDATE_SPEAKING = gql`
   mutation($speaking: [SpeakingInput!]!) {
     updateSpeaking(speaking: $speaking) {
-      email
+      languages {
+        speaking {
+          value
+          label
+        }
+      }
     }
   }
 `;
@@ -91,6 +110,7 @@ const UPDATE_SPEAKING = gql`
 const FETCH_PROFILE_INFORMATION = gql`
   query($name: ID!) {
     getProfileInformation(userId: $name) {
+      id
       languages {
         speaking {
           value
