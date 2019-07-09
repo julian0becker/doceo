@@ -57,7 +57,7 @@ export default function SpeakingModal() {
       <div>
         <Select
           isMulti
-          name="colors"
+          name="languages"
           options={countryList}
           className="basic-multi-select"
           classNamePrefix="select"
@@ -74,7 +74,7 @@ export default function SpeakingModal() {
             </Table.Header>
             <Table.Body>
               {speaking.map(language => (
-                <Table.Row>
+                <Table.Row key={language.value}>
                   <Table.Cell>
                     <Flag name={language.value} />
                   </Table.Cell>
