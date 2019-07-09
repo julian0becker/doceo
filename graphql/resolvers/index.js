@@ -50,7 +50,9 @@ module.exports = {
     },
     async getProfileInformation(_, { userId }) {
       try {
-        const user = await User.findOne({ _id: userId });
+        const user = await User.findOne({ _id: userId })
+          .populate("friends")
+          .exec();
         return user;
       } catch (err) {
         throw new Error(err);

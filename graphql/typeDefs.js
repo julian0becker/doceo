@@ -27,6 +27,7 @@ module.exports = gql`
     sentence: String!
     translation: String!
   }
+
   type User {
     id: ID
     email: String
@@ -34,6 +35,7 @@ module.exports = gql`
     username: String
     createdAt: String
     languages: Languages
+    friends: [User]
   }
 
   type Languages {

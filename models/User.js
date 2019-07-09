@@ -8,7 +8,8 @@ const userSchema = new Schema({
   languages: {
     speaking: [{ value: String, label: String }],
     learning: [{ value: String, label: String }]
-  }
+  },
+  friends: [{ type: Schema.Types.ObjectId, ref: "User" }]
 });
 
 module.exports = model("User", userSchema);

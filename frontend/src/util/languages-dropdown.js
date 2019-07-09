@@ -11,6 +11,7 @@ const languagesUnsorted = [
   { key: "fr", value: "fr", flag: "fr", text: "French" },
   { key: "cn", value: "cn", flag: "cn", text: "Mandarin" },
   { key: "hr", value: "hr", flag: "hr", text: "Croatian" },
+  { key: "mn", value: "mn", flag: "mn", text: "Mongolian" },
   { key: "dk", value: "dk", flag: "dk", text: "Danish" },
   { key: "ee", value: "ee", flag: "ee", text: "Estonian" },
   { key: "fi", value: "fi", flag: "fi", text: "Finnish" },
