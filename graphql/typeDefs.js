@@ -83,7 +83,7 @@ module.exports = gql`
     getExercises(recipientId: ID!): [Exercise]
     getRequests(recipientId: ID!): [Request]
     getProfileInformation(userId: ID!): User!
-    findFriendByUsername(username: String!): User!
+    findFriendByUsername(username: String!): User
   }
   type Mutation {
     createExercise(
