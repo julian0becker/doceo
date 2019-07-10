@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useApolloClient } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import FriendCard from "../FriendCard";
+import { AuthContext } from "../../context/auth-context";
 
 export default function FriendsModal() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
   const client = useApolloClient();
+  const { user } = useContext(AuthContext);
 
   const handleOnSubmit = async e => {
     e.preventDefault();
+    if (user.username === e.target.name.value.trim()) {
+      setError("I hope you already are friends with yourself");
+      return;
+    }
     try {
       const { data } = await client.query({
         query: FETCH_FRIEND,
@@ -36,7 +42,7 @@ export default function FriendsModal() {
         <Button secondary>Submit</Button>
       </Form>
       {error ? (
-        <h2>user not found</h2>
+        <h2>{error}</h2>
       ) : userData ? (
         <div>
           <FriendCard search={true} friend={userData.findFriendByUsername} />
