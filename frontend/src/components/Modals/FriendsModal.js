@@ -26,8 +26,6 @@ export default function FriendsModal() {
     } catch (err) {}
   };
 
-  console.log(userData);
-
   return (
     <div>
       <Form onSubmit={handleOnSubmit}>
