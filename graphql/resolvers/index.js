@@ -236,6 +236,20 @@ module.exports = {
       );
 
       return updatedEmail;
+    },
+    async addOneFriend(_, { friendId }, context) {
+      const { id } = checkAuth(context);
+
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $addToSet: {
+            friends: friendId
+          }
+        },
+        { new: true }
+      ).populate("friends");
+      return updatedUser;
     }
   }
 };

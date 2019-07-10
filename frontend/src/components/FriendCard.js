@@ -1,9 +1,9 @@
 import React from "react";
-import { Segment, Image, List } from "semantic-ui-react";
+import { Segment, Image, List, Button } from "semantic-ui-react";
 
-export default function FriendCard({ friend }) {
+export default function FriendCard({ friend, search }) {
   return (
-    <Segment>
+    <Segment style={{ display: "flex", justifyContent: "space-between" }}>
       <List>
         <List.Item>
           <Image
@@ -34,6 +34,11 @@ export default function FriendCard({ friend }) {
           </List.Content>
         </List.Item>
       </List>
+      {search && (
+        <div>
+          <Button secondary>Add Friend</Button>
+        </div>
+      )}
     </Segment>
   );
 }

@@ -103,5 +103,6 @@ module.exports = gql`
     updateSpeaking(speaking: [SpeakingInput!]!): User!
     updateLearning(learning: [LearningInput!]!): User!
     updateEmail(email: String!): User!
+    addOneFriend(friendId: String!): User!
   }
 `;

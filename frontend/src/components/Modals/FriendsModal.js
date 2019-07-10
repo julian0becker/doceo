@@ -26,7 +26,8 @@ export default function FriendsModal() {
     } catch (err) {}
   };
 
-  console.log(error);
+  console.log(userData);
+
   return (
     <div>
       <Form onSubmit={handleOnSubmit}>
@@ -39,7 +40,9 @@ export default function FriendsModal() {
       {error ? (
         <h2>user not found</h2>
       ) : userData ? (
-        <FriendCard friend={userData.findFriendByUsername} />
+        <div>
+          <FriendCard search={true} friend={userData.findFriendByUsername} />
+        </div>
       ) : null}
     </div>
   );
@@ -48,6 +51,7 @@ export default function FriendsModal() {
 const FETCH_FRIEND = gql`
   query($username: String!) {
     findFriendByUsername(username: $username) {
+      id
       username
       languages {
         speaking {
