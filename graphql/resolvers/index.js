@@ -28,7 +28,8 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
-    async getExercises(_, { recipientId }) {
+    async getExercises(_, { recipientId }, context) {
+      checkAuth(context);
       try {
         const exercise = await Exercise.find({
           recipients: { $elemMatch: { recipientId } }
@@ -38,7 +39,8 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async getRequests(_, { recipientId }) {
+    async getRequests(_, { recipientId }, context) {
+      checkAuth(context);
       try {
         const request = await Request.find({
           recipients: { $elemMatch: { recipientId } }
@@ -48,7 +50,8 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async getProfileInformation(_, { userId }) {
+    async getProfileInformation(_, { userId }, context) {
+      checkAuth(context);
       try {
         const user = await User.findOne({ _id: userId })
           .populate("friends")
@@ -56,6 +59,18 @@ module.exports = {
         return user;
       } catch (err) {
         throw new Error(err);
+      }
+    },
+    async findFriendByUsername(_, { username }, context) {
+      checkAuth(context);
+      if (username.trim() === "") {
+        throw new Error("Search must not be empty");
+      }
+      try {
+        const user = await User.findOne({ username });
+        return user;
+      } catch (error) {
+        throw new Error(error);
       }
     }
   },
@@ -68,7 +83,7 @@ module.exports = {
       const { id, username } = checkAuth(context);
 
       if (subject.trim() === "") {
-        throw new Error("Post body must not be empty");
+        throw new Error("Exercise body must not be empty");
       }
 
       const newExercise = new Exercise({
@@ -182,8 +197,6 @@ module.exports = {
     },
     async updateSpeaking(_, { speaking }, context) {
       const { id } = checkAuth(context);
-      // const user = await User.findOne({ __id: id });
-
       const updatedSpeaking = await User.findOneAndUpdate(
         { _id: id },
         {
