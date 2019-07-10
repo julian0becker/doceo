@@ -16,7 +16,7 @@ export default function SpeakingModal() {
   const { languages } = useContext(UserContext);
   const { user } = useContext(AuthContext);
   const [learning, setLearning] = useState(null);
-  const [updatingLearning, { error }] = useMutation(UPDATE_LEARNING);
+  const [updatingLearning] = useMutation(UPDATE_LEARNING);
 
   languages.learning.forEach(language => {
     delete language.__typename;

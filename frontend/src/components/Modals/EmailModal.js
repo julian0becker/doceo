@@ -6,7 +6,7 @@ import { FETCH_PROFILE_INFORMATION_MODAL_EMAIL } from "../../util/graphql";
 import { AuthContext } from "../../context/auth-context";
 
 export default function EmailModal() {
-  const [updateEmail, { error: err }] = useMutation(UPDATE_EMAIL);
+  const [updateEmail] = useMutation(UPDATE_EMAIL);
   const { isOpen, openModal } = useContext(ModalContext);
   const { user } = useContext(AuthContext);
 

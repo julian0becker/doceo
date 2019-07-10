@@ -7,7 +7,7 @@ import { UserContext } from "../context/user-context";
 function Overview() {
   const { user } = useContext(AuthContext);
   const { setLanguages } = useContext(UserContext);
-  const { data, error, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
+  const { data, loading } = useQuery(FETCH_PROFILE_INFORMATION, {
     variables: { name: user.id }
   });
 

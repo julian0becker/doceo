@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { UserContext } from "../context/user-context";
 import { Menu, Image, Flag } from "semantic-ui-react";
 

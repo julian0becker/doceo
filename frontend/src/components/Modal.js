@@ -4,6 +4,7 @@ import { ModalContext } from "../context/modal-context";
 import EmailModal from "./Modals/EmailModal";
 import SpeakingModal from "./Modals/SpeakingModal";
 import LearningModal from "./Modals/LearningModal";
+import FriendsModal from "./Modals/FriendsModal";
 
 ReactModal.setAppElement("#root");
 
@@ -37,6 +38,9 @@ export default function Modal() {
       break;
     case "learning-modal":
       ModalType = LearningModal;
+      break;
+    case "friends-modal":
+      ModalType = FriendsModal;
       break;
     default:
       break;
