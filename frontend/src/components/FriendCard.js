@@ -1,7 +1,15 @@
 import React from "react";
 import { Segment, Image, List, Button } from "semantic-ui-react";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 export default function FriendCard({ friend, search }) {
+  const [addFriend] = useMutation(ADD_FRIEND);
+
+  const handleAddFriend = () => {
+    addFriend({ variables: { friendId: friend.id } });
+  };
+
   return (
     <Segment style={{ display: "flex", justifyContent: "space-between" }}>
       <List>
@@ -36,9 +44,31 @@ export default function FriendCard({ friend, search }) {
       </List>
       {search && (
         <div>
-          <Button secondary>Add Friend</Button>
+          <Button onClick={handleAddFriend} secondary>
+            Add Friend
+          </Button>
         </div>
       )}
     </Segment>
   );
 }
+
+const ADD_FRIEND = gql`
+  mutation($friendId: String!) {
+    addOneFriend(friendId: $friendId) {
+      friends {
+        username
+        languages {
+          speaking {
+            label
+            value
+          }
+          learning {
+            label
+            value
+          }
+        }
+      }
+    }
+  }
+`;
