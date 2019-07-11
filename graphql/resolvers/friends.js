@@ -30,6 +30,19 @@ module.exports = {
         { new: true }
       ).populate("friends");
       return updatedUser;
+    },
+    async removeFriend(_, { friendId }, context) {
+      const { id } = checkAuth(context);
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $pull: {
+            friends: friendId
+          }
+        },
+        { new: true }
+      ).populate("friends");
+      return updatedUser;
     }
   }
 };
