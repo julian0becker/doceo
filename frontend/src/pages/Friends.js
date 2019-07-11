@@ -11,7 +11,8 @@ function Friends() {
   const { user } = useContext(AuthContext);
   const {
     data: { getProfileInformation },
-    loading
+    loading,
+    error
   } = useQuery(FETCH_FRIENDS, {
     variables: { name: user.id }
   });
@@ -45,6 +46,8 @@ function Friends() {
         <Segment loading>
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
+      ) : error ? (
+        <h2>Something went wrong - refresh</h2>
       ) : (
         getProfileInformation.friends.map(friend => (
           <FriendCard key={friend.username} friend={friend} />
