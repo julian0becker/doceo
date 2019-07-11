@@ -50,7 +50,11 @@ function Friends() {
         <h2>Something went wrong - refresh</h2>
       ) : (
         getProfileInformation.friends.map(friend => (
-          <FriendCard key={friend.username} friend={friend} />
+          <FriendCard
+            key={friend.username}
+            friend={friend}
+            deleteFriend={true}
+          />
         ))
       )}
     </div>
@@ -61,6 +65,7 @@ const FETCH_FRIENDS = gql`
   query($name: ID!) {
     getProfileInformation(userId: $name) {
       friends {
+        id
         username
         languages {
           speaking {

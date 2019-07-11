@@ -5,10 +5,13 @@ import gql from "graphql-tag";
 import { AuthContext } from "../context/auth-context";
 import { ModalContext } from "../context/modal-context";
 
-export default function FriendCard({ friend, search }) {
+export default function FriendCard({ friend, search, deleteFriend }) {
   const { user } = useContext(AuthContext);
   const { isOpen, openModal } = useContext(ModalContext);
   const [addFriend] = useMutation(ADD_FRIEND);
+  const [removeYourFriend] = useMutation(REMOVE_FRIEND);
+
+  console.log(friend);
 
   const handleAddFriend = () => {
     addFriend({
@@ -16,6 +19,13 @@ export default function FriendCard({ friend, search }) {
       refetchQueries: [{ query: FETCH_FRIENDS, variables: { name: user.id } }]
     });
     openModal(!isOpen);
+  };
+
+  const handleRemoveFriend = () => {
+    removeYourFriend({
+      variables: { friendId: friend.id },
+      refetchQueries: [{ query: FETCH_FRIENDS, variables: { name: user.id } }]
+    });
   };
 
   return (
@@ -57,6 +67,13 @@ export default function FriendCard({ friend, search }) {
           </Button>
         </div>
       )}
+      {deleteFriend && (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Button onClick={handleRemoveFriend} secondary>
+            Remove
+          </Button>
+        </div>
+      )}
     </Segment>
   );
 }
@@ -81,11 +98,20 @@ const ADD_FRIEND = gql`
   }
 `;
 
+const REMOVE_FRIEND = gql`
+  mutation($friendId: String!) {
+    removeFriend(friendId: $friendId) {
+      username
+    }
+  }
+`;
+
 const FETCH_FRIENDS = gql`
   query($name: ID!) {
     getProfileInformation(userId: $name) {
       id
       friends {
+        id
         username
         languages {
           speaking {
