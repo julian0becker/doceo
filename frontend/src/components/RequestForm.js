@@ -178,8 +178,8 @@ const CREATE_REQUEST = gql`
   mutation(
     $subject: String!
     $description: String
-    $recipients: [RecipientInput]
-    $language: String
+    $recipients: [RecipientInput!]!
+    $language: String!
   ) {
     createRequest(
       subject: $subject

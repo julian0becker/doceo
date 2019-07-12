@@ -97,8 +97,8 @@ module.exports = gql`
     createRequest(
       subject: String!
       description: String
-      recipients: [RecipientInput]
-      language: String
+      recipients: [RecipientInput!]!
+      language: String!
     ): Request!
     updateSpeaking(speaking: [SpeakingInput!]!): User!
     updateLearning(learning: [LearningInput!]!): User!
