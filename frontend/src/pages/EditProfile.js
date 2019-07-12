@@ -4,7 +4,8 @@ import { AuthContext } from "../context/auth-context";
 import ProfileDetails from "../components/ProfileDetails";
 import gql from "graphql-tag";
 import { UserContext } from "../context/user-context";
-import { Header, Icon, Segment, Image } from "semantic-ui-react";
+import { Header, Icon } from "semantic-ui-react";
+import LoadingBlock from "../components/LoadingBlock";
 
 function EditProfile() {
   const { user } = useContext(AuthContext);
@@ -25,9 +26,7 @@ function EditProfile() {
         <Header.Content>Settings</Header.Content>
       </Header>
       {loading ? (
-        <Segment loading>
-          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-        </Segment>
+        <LoadingBlock />
       ) : (
         <ProfileDetails info={data.getProfileInformation} />
       )}

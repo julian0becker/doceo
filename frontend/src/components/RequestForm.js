@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Form, Segment } from "semantic-ui-react";
 import { languagesUnsorted } from "../util/languages-dropdown";
 import { UserContext } from "../context/user-context";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth-context";
 import { useQuery } from "@apollo/react-hooks";
+import LoadingBlock from "../components/LoadingBlock";
 
 export default function RequestForm() {
   const { languages } = useContext(UserContext);
@@ -38,23 +39,34 @@ export default function RequestForm() {
   });
 
   return (
-    <Segment inverted>
-      <Form inverted>
-        <Form.Group>
-          <Form.Input label="Word / Phrase" type="text" />
-          <Form.Select
-            options={languagesLearning}
-            label="Language"
-            placeholder="language"
-          />
-          <Form.Dropdown label="Recipients" multiple selection options={res} />
-        </Form.Group>
-        <Form.Group>
-          <Form.TextArea label="Description (optional)" />
-        </Form.Group>
-        <Form.Button inverted>Submit</Form.Button>
-      </Form>
-    </Segment>
+    <div>
+      {loading ? (
+        <LoadingBlock />
+      ) : (
+        <Segment inverted>
+          <Form inverted>
+            <Form.Group>
+              <Form.Input label="Word / Phrase" type="text" />
+              <Form.Select
+                options={languagesLearning}
+                label="Language"
+                placeholder="language"
+              />
+              <Form.Dropdown
+                label="Recipients"
+                multiple
+                selection
+                options={res}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.TextArea label="Description (optional)" />
+            </Form.Group>
+            <Form.Button inverted>Submit</Form.Button>
+          </Form>
+        </Segment>
+      )}
+    </div>
   );
 }
 

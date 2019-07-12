@@ -3,8 +3,9 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth-context";
 import FriendCard from "../components/FriendCard";
-import { Button, Header, Icon, Segment, Image } from "semantic-ui-react";
+import { Button, Header, Icon } from "semantic-ui-react";
 import { ModalContext } from "../context/modal-context";
+import LoadingBlock from "../components/LoadingBlock";
 
 function Friends() {
   const { isOpen, openModal, changeModalType } = useContext(ModalContext);
@@ -39,9 +40,7 @@ function Friends() {
       </div>
 
       {loading ? (
-        <Segment loading>
-          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-        </Segment>
+        <LoadingBlock />
       ) : (
         data.getProfileInformation.friends.map(friend => (
           <FriendCard

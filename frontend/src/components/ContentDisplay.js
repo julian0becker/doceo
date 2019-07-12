@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { Grid, Segment, Header, Icon, Image } from "semantic-ui-react";
 import Card from "./Card";
 import { AuthContext } from "../context/auth-context";
+import LoadingBlock from "./LoadingBlock";
 
 function ContentDisplay() {
   const { user } = useContext(AuthContext);
@@ -23,9 +24,7 @@ function ContentDisplay() {
         </Grid.Row>
         <Grid.Row>
           {loading ? (
-            <Segment loading>
-              <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-            </Segment>
+            <LoadingBlock />
           ) : (
             data.getExercises &&
             data.getExercises.map(exercise => (
