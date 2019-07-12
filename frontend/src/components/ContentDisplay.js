@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { Grid, Segment, Header, Icon, Image } from "semantic-ui-react";
+import { Grid, Header, Icon } from "semantic-ui-react";
 import Card from "./Card";
 import { AuthContext } from "../context/auth-context";
 import LoadingBlock from "./LoadingBlock";

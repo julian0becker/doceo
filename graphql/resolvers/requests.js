@@ -23,8 +23,6 @@ module.exports = {
     ) {
       const { id, username } = checkAuth(context);
 
-      // checks for empty fields
-
       const newRequest = new Request({
         username,
         user: id,
