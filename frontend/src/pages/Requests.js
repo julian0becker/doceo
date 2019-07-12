@@ -1,9 +1,12 @@
 import React from "react";
+import RequestForm from "../components/RequestForm";
+import IncomingRequests from "../components/IncomingRequests";
 
 function Requests() {
   return (
     <div>
-      <h1>These are your Requests</h1>
+      <RequestForm />
+      <IncomingRequests />
     </div>
   );
 }

@@ -9,11 +9,7 @@ import { ModalContext } from "../context/modal-context";
 function Friends() {
   const { isOpen, openModal, changeModalType } = useContext(ModalContext);
   const { user } = useContext(AuthContext);
-  const {
-    data: { getProfileInformation },
-    loading,
-    error
-  } = useQuery(FETCH_FRIENDS, {
+  const { data, loading } = useQuery(FETCH_FRIENDS, {
     variables: { name: user.id }
   });
 
@@ -46,10 +42,8 @@ function Friends() {
         <Segment loading>
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
-      ) : error ? (
-        <h2>Something went wrong - refresh</h2>
       ) : (
-        getProfileInformation.friends.map(friend => (
+        data.getProfileInformation.friends.map(friend => (
           <FriendCard
             key={friend.username}
             friend={friend}

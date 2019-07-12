@@ -11,8 +11,6 @@ export default function FriendCard({ friend, search, deleteFriend }) {
   const [addFriend] = useMutation(ADD_FRIEND);
   const [removeYourFriend] = useMutation(REMOVE_FRIEND);
 
-  console.log(friend);
-
   const handleAddFriend = () => {
     addFriend({
       variables: { friendId: friend.id },

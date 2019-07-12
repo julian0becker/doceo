@@ -4,11 +4,11 @@ const requestSchema = new Schema({
   username: String,
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: "User"
   },
   subject: String,
   description: String,
-  recipients: [{ recipientId: { type: Schema.Types.ObjectId, ref: "users" } }],
+  recipients: [{ recipientId: { type: Schema.Types.ObjectId, ref: "User" } }],
   createdAt: String,
   language: String
 });

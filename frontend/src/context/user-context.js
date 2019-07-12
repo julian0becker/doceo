@@ -14,7 +14,8 @@ if (localStorage.getItem("languages")) {
 const UserContext = createContext({
   page: null,
   languages: null,
-  setPage: () => {}
+  setPage: () => {},
+  setLanguages: () => {}
 });
 
 function UserProvider(props) {
