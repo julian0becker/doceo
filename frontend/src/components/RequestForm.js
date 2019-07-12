@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Segment } from "semantic-ui-react";
+import { Form, Segment, Grid, Message } from "semantic-ui-react";
 import { languagesUnsorted } from "../util/languages-dropdown";
 import { UserContext } from "../context/user-context";
 import gql from "graphql-tag";
@@ -11,6 +11,7 @@ export default function RequestForm() {
   let res;
   const [recipient, setRecipient] = useState(null);
   const [formLanguage, setFormLanguage] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { languages } = useContext(UserContext);
   const { user } = useContext(AuthContext);
   const { data, loading, error } = useQuery(FETCH_FRIENDS, {
@@ -43,10 +44,9 @@ export default function RequestForm() {
     }
   });
 
-  console.log(languagesLearning);
-
   const handleOnSubmit = e => {
     e.preventDefault();
+
     if (
       !recipient ||
       !formLanguage ||
@@ -57,15 +57,22 @@ export default function RequestForm() {
     const rightFormRecipient = recipient.map(r => {
       return { recipientId: r };
     });
-    console.log("right", rightFormRecipient);
-    console.log(e.target.word.value, recipient, formLanguage);
+
     createMyRequest({
       variables: {
         subject: e.target.word.value.trim(),
         recipients: rightFormRecipient,
-        language: formLanguage
+        language: formLanguage,
+        description: e.target.description.value.trim()
       }
     });
+
+    e.target.word.value = "";
+    e.target.description.value = "";
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
   };
 
   const handleRecipientChange = (e, { value }) => {
@@ -83,34 +90,62 @@ export default function RequestForm() {
       ) : (
         <Segment inverted>
           <Form onSubmit={e => handleOnSubmit(e)} inverted>
-            <Form.Group>
-              <Form.Input
-                required
-                name="word"
-                label="Word / Phrase"
-                type="text"
-              />
-              <Form.Select
-                required
-                onChange={handleLanguageChange}
-                options={languagesLearning}
-                name="language"
-                label="Language"
-                placeholder="language"
-              />
-              <Form.Dropdown
-                required
-                label="Recipients"
-                onChange={handleRecipientChange}
-                multiple
-                selection
-                options={res}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.TextArea label="Description (optional)" />
-            </Form.Group>
-            <Form.Button inverted>Submit</Form.Button>
+            <Grid columns={2}>
+              <Grid.Column width={12}>
+                <Form.Group>
+                  <Form.Input
+                    required
+                    name="word"
+                    label="Word / Phrase"
+                    type="text"
+                    width={10}
+                  />
+                  <Form.Select
+                    required
+                    onChange={handleLanguageChange}
+                    options={languagesLearning}
+                    name="language"
+                    label="Language"
+                    width={6}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Dropdown
+                    required
+                    label="Recipients"
+                    onChange={handleRecipientChange}
+                    multiple
+                    selection
+                    options={res}
+                    width={16}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.TextArea
+                    name="description"
+                    label="Description (optional)"
+                    width={16}
+                  />
+                </Form.Group>
+              </Grid.Column>
+              <Grid.Column
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "center"
+                }}
+                width={4}
+              >
+                {showSuccess && (
+                  <Message
+                    info
+                    content="Request has been successfully created"
+                  />
+                )}
+                <Form.Button inverted>Submit</Form.Button>
+              </Grid.Column>
+            </Grid>
           </Form>
         </Segment>
       )}
