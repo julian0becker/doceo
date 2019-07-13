@@ -10,7 +10,6 @@ const HttpLink = createHttpLink({
   uri: "http://localhost:5000"
 });
 
-// adds token automatically to protected routes
 const authLink = setContext(() => {
   const token = localStorage.getItem("jwtToken");
   return { headers: { Authorization: token ? `Bearer ${token}` : "" } };

@@ -132,11 +132,12 @@ export default function RequestForm() {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
+                  justifyContent: "space-between",
                   alignItems: "center"
                 }}
                 width={4}
               >
+                <h3>Create Request</h3>
                 {showSuccess && (
                   <Message
                     info

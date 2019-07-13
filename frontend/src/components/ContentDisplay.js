@@ -10,7 +10,8 @@ function ContentDisplay() {
   const { user } = useContext(AuthContext);
 
   const { loading, data } = useQuery(FETCH_EXERCISE_QUERY, {
-    variables: { name: user.id }
+    variables: { name: user.id },
+    fetchPolicy: "cache-and-network"
   });
 
   return (
