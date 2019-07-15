@@ -3,11 +3,11 @@ const checkAuth = require("../../util/check-auth");
 
 module.exports = {
   Query: {
-    async getRequests(_, { recipientId }, context) {
+    async getRequests(_, { recipientId, isRequestClosed }, context) {
       checkAuth(context);
       try {
         const request = await Request.find({
-          recipients: { $elemMatch: { recipientId } }
+          recipients: { $elemMatch: { recipientId, isRequestClosed } }
         }).sort({ createdAt: -1 });
         return request;
       } catch (err) {
@@ -35,6 +35,26 @@ module.exports = {
 
       const request = await newRequest.save();
       return request;
+    },
+    async closeRequest(_, { requestId }, context) {
+      const { id } = checkAuth(context);
+
+      const updatedRequest = await Request.findOneAndUpdate(
+        {
+          _id: requestId,
+          recipients: {
+            $elemMatch: {
+              recipientId: id
+            }
+          }
+        },
+        {
+          $set: {
+            "recipients.$.isRequestClosed": true
+          }
+        }
+      );
+      return updatedRequest;
     }
   }
 };

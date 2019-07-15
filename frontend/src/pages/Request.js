@@ -1,23 +1,37 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient, useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth-context";
 import gql from "graphql-tag";
 import { Segment, Card, Flag, Button } from "semantic-ui-react";
 import moment from "moment";
+import { UserContext } from "../context/user-context";
 
 export default function Request(props) {
   const requestIdContext = props.match.params.id;
   const { user } = useContext(AuthContext);
+  const { setPage } = useContext(UserContext);
   const client = useApolloClient();
+
+  const [closeRequest] = useMutation(CLOSE_REQUEST);
 
   const data = client.readQuery({
     query: FETCH_REQUESTS_QUERY,
-    variables: { name: user.id }
+    variables: { name: user.id, isRequestClosed: false }
   });
 
   const request = data.getRequests.filter(req => req.id === requestIdContext);
 
+  const handleCloseRequest = () => {
+    closeRequest({
+      variables: { requestId: request[0].id },
+      update(store, result) {
+        props.history.push("/");
+      }
+    });
+  };
+
+  console.log(request);
   return (
     <div>
       <Link to="/">
@@ -85,21 +99,31 @@ export default function Request(props) {
         </div>
       </Segment>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button secondary>Close Request</Button>
+        <Button onClick={handleCloseRequest} secondary>
+          Close Request
+        </Button>
       </div>
     </div>
   );
 }
 
 const FETCH_REQUESTS_QUERY = gql`
-  query($name: ID!) {
-    getRequests(recipientId: $name) {
+  query($name: ID!, $isRequestClosed: Boolean!) {
+    getRequests(recipientId: $name, isRequestClosed: $isRequestClosed) {
       id
       username
       language
       subject
       createdAt
       description
+    }
+  }
+`;
+
+const CLOSE_REQUEST = gql`
+  mutation($requestId: ID!) {
+    closeRequest(requestId: $requestId) {
+      username
     }
   }
 `;

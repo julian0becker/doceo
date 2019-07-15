@@ -8,7 +8,12 @@ const requestSchema = new Schema({
   },
   subject: String,
   description: String,
-  recipients: [{ recipientId: { type: Schema.Types.ObjectId, ref: "User" } }],
+  recipients: [
+    {
+      recipientId: { type: Schema.Types.ObjectId, ref: "User" },
+      isRequestClosed: Boolean
+    }
+  ],
   createdAt: String,
   language: String
 });

@@ -12,10 +12,12 @@ module.exports = gql`
   }
   type Recipient {
     recipientId: ID!
+    isRequestClosed: Boolean!
   }
 
   input RecipientInput {
     recipientId: ID!
+    isRequestClosed: Boolean!
   }
 
   input SentenceInput {
@@ -81,7 +83,7 @@ module.exports = gql`
   }
   type Query {
     getExercises(recipientId: ID!): [Exercise]
-    getRequests(recipientId: ID!): [Request]
+    getRequests(recipientId: ID!, isRequestClosed: Boolean!): [Request]
     getProfileInformation(userId: ID!): User!
     findFriendByUsername(username: String!): User
   }
@@ -105,5 +107,6 @@ module.exports = gql`
     updateEmail(email: String!): User!
     addOneFriend(friendId: String!): User!
     removeFriend(friendId: String!): User!
+    closeRequest(requestId: ID!): Request!
   }
 `;

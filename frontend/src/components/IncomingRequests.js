@@ -11,7 +11,7 @@ export default function IncomingRequests() {
   const { user } = useContext(AuthContext);
 
   const { loading, data } = useQuery(FETCH_REQUESTS_QUERY, {
-    variables: { name: user.id },
+    variables: { name: user.id, isRequestClosed: false },
     fetchPolicy: "cache-and-network"
   });
 
@@ -64,8 +64,8 @@ export default function IncomingRequests() {
 }
 
 const FETCH_REQUESTS_QUERY = gql`
-  query($name: ID!) {
-    getRequests(recipientId: $name) {
+  query($name: ID!, $isRequestClosed: Boolean!) {
+    getRequests(recipientId: $name, isRequestClosed: $isRequestClosed) {
       id
       username
       language

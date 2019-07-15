@@ -55,7 +55,7 @@ export default function RequestForm() {
     )
       return;
     const rightFormRecipient = recipient.map(r => {
-      return { recipientId: r };
+      return { recipientId: r, isRequestClosed: false };
     });
 
     createMyRequest({
