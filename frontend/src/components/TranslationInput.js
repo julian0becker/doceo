@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Icon } from "semantic-ui-react";
+import { Form, Button, Icon, Segment } from "semantic-ui-react";
 
 export default function TranslationInput() {
   const [fields, setFields] = useState([{ sentence: "", translation: "" }]);
@@ -35,7 +35,7 @@ export default function TranslationInput() {
   };
 
   return (
-    <div className="App">
+    <Segment inverted>
       <Form onSubmit={e => handleSubmit(e)}>
         {fields.map((field, idx) => {
           return (
@@ -67,9 +67,9 @@ export default function TranslationInput() {
           <Icon name="add" />
         </Button>
         <Button secondary type="submit">
-          Submit
+          Create Exercise
         </Button>
       </Form>
-    </div>
+    </Segment>
   );
 }
