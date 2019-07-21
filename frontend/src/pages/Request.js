@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth-context";
 import gql from "graphql-tag";
 import { Segment, Card, Flag, Button } from "semantic-ui-react";
 import moment from "moment";
-import { UserContext } from "../context/user-context";
+import TranslationInput from "../components/TranslationInput";
+import DialogueInput from "../components/DialogueInput";
 
 export default function Request(props) {
   const requestIdContext = props.match.params.id;
+  const [openTranslation, setOpenTranslation] = useState(false);
+  const [openDialogue, setOpenDialogue] = useState(false);
   const { user } = useContext(AuthContext);
-  const { setPage } = useContext(UserContext);
   const client = useApolloClient();
 
   const [closeRequest] = useMutation(CLOSE_REQUEST);
@@ -31,12 +33,28 @@ export default function Request(props) {
     });
   };
 
-  console.log(request);
+  const handleOpenTranslationInput = () => {
+    setOpenTranslation(!openTranslation);
+    setOpenDialogue(false);
+  };
+
+  const handleOpenDialogueInput = () => {
+    setOpenTranslation(false);
+    setOpenDialogue(!openDialogue);
+  };
+
   return (
     <div>
-      <Link to="/">
-        <Button secondary>Back</Button>
-      </Link>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Link to="/">
+          <Button secondary>Back</Button>
+        </Link>
+        <div>
+          <Button onClick={handleCloseRequest} secondary>
+            Close Request
+          </Button>
+        </div>
+      </div>
       <Segment style={{ display: "flex", minHeight: "200px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
@@ -76,7 +94,7 @@ export default function Request(props) {
             }}
           >
             <div>
-              <Card>
+              <Card onClick={handleOpenTranslationInput}>
                 <Card.Content>
                   <Card.Header>Translation</Card.Header>
                   <Card.Description>
@@ -86,7 +104,7 @@ export default function Request(props) {
               </Card>
             </div>
             <div>
-              <Card>
+              <Card onClick={handleOpenDialogueInput}>
                 <Card.Content>
                   <Card.Header>Dialogue</Card.Header>
                   <Card.Description>
@@ -98,11 +116,8 @@ export default function Request(props) {
           </div>
         </div>
       </Segment>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={handleCloseRequest} secondary>
-          Close Request
-        </Button>
-      </div>
+      {openTranslation && <TranslationInput />}
+      {openDialogue && <DialogueInput />}
     </div>
   );
 }

@@ -68,7 +68,7 @@ export default function FriendCard({ friend, search, deleteFriend }) {
       {deleteFriend && (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button onClick={handleRemoveFriend} secondary>
-            Remove
+            Unfollow
           </Button>
         </div>
       )}
