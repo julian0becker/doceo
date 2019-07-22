@@ -28,7 +28,6 @@ function Exercise(props) {
             <Button secondary>Back</Button>
         </Link>
       <Task1 exercise={exercise}/>
-      <Button className="ui button">Start</Button>
     </div>
   );
 }

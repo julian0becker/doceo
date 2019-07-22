@@ -12,6 +12,9 @@ let splitArrayCopy = [];
 let answerArray;
 let answer = [];
 let answerString = null;
+
+let buttonText = 'Solve task first';
+let buttonClass = 'negative ui button';
 //Converting the Input to Array
 
  //console.log(initialData);
@@ -48,20 +51,25 @@ const getListStyle = isDraggingOver => ({
   overflow: 'auto',
 });
 
-//Button Onclick
-    const handleClick = (e) => {
-      e.preventDefault();
-      if (fetchTask === answerString) {
-        console.log('Thats right');
-      } else {
-        console.log('Thats wrong');
-    }}
+const handleClick = (e) => {
+    e.preventDefault();
+    if (fetchTask === answerString) {
+      console.log('Thats right');
+        buttonText = 'Next';
+        buttonClass = 'positive ui button';
+    } else {
+      console.log('Thats wrong');
+        buttonText = 'Wrong';
+        buttonClass = 'negative ui button';
+  }}
 
 export default class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: splitArray
+      items: splitArray,
+      buttonText: buttonText,
+      buttonClass: buttonClass
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -93,7 +101,8 @@ export default class Task extends Component {
     //console.log('splitArray:')
     //console.log(splitArray);
   }
-  
+
+      //Button Onclick
 
   componentDidUpdate(){
     //Copy State into an Array
@@ -124,6 +133,12 @@ export default class Task extends Component {
     //console.log('Fetch and Answer:')
     //console.log(fetchTask);
     //console.log(answerString);
+
+    this.setState = {
+        items: splitArray,
+        buttonText: buttonText,
+        buttonClass: buttonClass
+      };
   }
 
   onDragEnd(result) {
@@ -185,6 +200,7 @@ export default class Task extends Component {
             <button className="ui button" onClick={handleClick}>
             Submit
           </button>
+          <button className={this.state.buttonClass}>{this.state.buttonText}</button>
         </div>
       </div>
     );
