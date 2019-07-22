@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { useApolloClient } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth-context";
 import Task1 from './../components/Tasks/Task1.js';
+import { Link } from "react-router-dom";
 
 function Exercise(props) {
   const exerciseIdContext = props.match.params.id;
@@ -17,14 +17,18 @@ function Exercise(props) {
 
   const exercise = data.getExercises.filter(ex => ex.id === exerciseIdContext);
 
+  //const fetchTask = 'Test Data';
+  //const fetchTranslation = 'Test Data';
+
   console.log(exercise);
   return (
     <div>
       <h1>single exercise</h1>
       <Link to="/">
-        <Button secondary>Back</Button>
-        <Task1 />
-      </Link>
+            <Button secondary>Back</Button>
+        </Link>
+      <Task1 exercise={exercise}/>
+      <Button className="ui button">Start</Button>
     </div>
   );
 }

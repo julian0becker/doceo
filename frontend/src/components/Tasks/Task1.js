@@ -4,15 +4,15 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import './Task1.css';
 
 //The Input
-let fetchTask = 'Der Winter naht , denn es wird kalt.';
-let fetchTranslation = 'The winter is near because it is getting cold.';
+let fetchTask = null;
+let fetchTranslation = null;
 //Empty Variables
-const splitArray = [];
+let splitArray = [];
+let splitArrayCopy = [];
 let answerArray;
 let answer = [];
-let fuckMe = null;
+let answerString = null;
 //Converting the Input to Array
-let split = fetchTask.split(" ");
 
  //console.log(initialData);
 
@@ -35,7 +35,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'lightgreen' : 'white',
 
   // styles we need to apply on draggables
   ...draggableStyle,
@@ -51,7 +51,7 @@ const getListStyle = isDraggingOver => ({
 //Button Onclick
     const handleClick = (e) => {
       e.preventDefault();
-      if (fetchTask === fuckMe) {
+      if (fetchTask === answerString) {
         console.log('Thats right');
       } else {
         console.log('Thats wrong');
@@ -68,6 +68,9 @@ export default class Task extends Component {
 
   //Will happen before HTML loads
   componentWillMount(){
+    fetchTask = this.props.exercise[0].sentences[0].sentence;
+    fetchTranslation = this.props.exercise[0].sentences[0].translation;
+    let split = fetchTask.split(" ");
     let Loop = () =>{
 
       //Putting the Split in the right format
@@ -75,11 +78,13 @@ export default class Task extends Component {
         const element = split[index];
         //console.log(element);
         splitArray.push({
-          id: `${index}`,
+          id: `${Math.floor(Math.random() * (555000 - 100 +1)) + 100}`,
           content: `${element}`
         });
+        splitArrayCopy = [...splitArray];
       }
-      shuffleFunction(splitArray);
+      shuffleFunction(splitArrayCopy);
+      splitArray = [];
     }
 
     //Execute the function, yes thats unnecessary.
@@ -95,8 +100,8 @@ export default class Task extends Component {
     answerArray = this.state.items;
     //Empty the answer so it does not add indefinitly
     answer = [];
-    //Also Empty the fuckMe String for the same reason
-    fuckMe = null;
+    //Also Empty the answerString String for the same reason
+    answerString = null;
 
     //console.log('answerArray');
     //console.log(answerArray);
@@ -115,10 +120,10 @@ export default class Task extends Component {
     //console.log(answer.join(' '));
 
     //Convert the Answer back to a String in the same way the Input should be.
-    fuckMe = `${answer.join(' ')}`;
+    answerString = `${answer.join(' ')}`;
     //console.log('Fetch and Answer:')
     //console.log(fetchTask);
-    //console.log(fuckMe);
+    //console.log(answerString);
   }
 
   onDragEnd(result) {
