@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Component } from 'react';
+import Task1 from './../components/Tasks/Task1.js';
 
-function Exercise() {
-  return (
-    <div>
-      <h1>single exercise</h1>
-    </div>
-  );
+export default class Exercise extends Component {
+    render(){
+      return (
+        <div>
+            <Task1 />
+        </div>
+      );
+    }
 }
-
-export default Exercise;

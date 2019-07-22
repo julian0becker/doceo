@@ -20,6 +20,7 @@
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
     "react-select-country-list": "^2.0.1",
+    "react-beautiful-dnd": "^11.0.4",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2"
   },
