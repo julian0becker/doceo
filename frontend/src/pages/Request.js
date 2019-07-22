@@ -116,7 +116,7 @@ export default function Request(props) {
           </div>
         </div>
       </Segment>
-      {openTranslation && <TranslationInput />}
+      {openTranslation && <TranslationInput data={request[0]} />}
       {openDialogue && <DialogueInput />}
     </div>
   );
@@ -131,6 +131,9 @@ const FETCH_REQUESTS_QUERY = gql`
       subject
       createdAt
       description
+      user {
+        id
+      }
     }
   }
 `;

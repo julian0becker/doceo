@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import { Form, Button, Icon, Segment } from "semantic-ui-react";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
-export default function TranslationInput() {
+export default function TranslationInput({ data }) {
   const [fields, setFields] = useState([{ sentence: "", translation: "" }]);
+  const [creatingExercise, { loading }] = useMutation(CREATE_EXERCISE, {
+    variables: {
+      subject: data.subject,
+      description: data.description,
+      sentences: fields,
+      recipients: [{ recipientId: data.user.id }]
+    }
+  });
 
   const handleChangeSentence = (i, event) => {
     const values = [...fields];
@@ -30,8 +40,7 @@ export default function TranslationInput() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(fields);
-    setFields([{ sentence: "", translation: "" }]);
+    creatingExercise();
   };
 
   return (
@@ -66,10 +75,28 @@ export default function TranslationInput() {
         <Button secondary type="button" onClick={handleAdd}>
           <Icon name="add" />
         </Button>
-        <Button secondary type="submit">
+        <Button disabled={loading} secondary type="submit">
           Create Exercise
         </Button>
       </Form>
     </Segment>
   );
 }
+
+const CREATE_EXERCISE = gql`
+  mutation(
+    $subject: String!
+    $description: String
+    $sentences: [SentenceInput!]!
+    $recipients: [RecipientExerciseInput!]!
+  ) {
+    createExercise(
+      subject: $subject
+      description: $description
+      sentences: $sentences
+      recipients: $recipients
+    ) {
+      username
+    }
+  }
+`;

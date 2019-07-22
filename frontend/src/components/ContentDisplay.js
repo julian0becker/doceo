@@ -5,6 +5,7 @@ import { Grid, Header, Icon } from "semantic-ui-react";
 import Card from "./Card";
 import { AuthContext } from "../context/auth-context";
 import LoadingBlock from "./LoadingBlock";
+import { Link } from "react-router-dom";
 
 function ContentDisplay() {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,10 @@ function ContentDisplay() {
             data.getExercises &&
             data.getExercises.map(exercise => (
               <Grid.Column key={exercise.id} style={{ marginBottom: "20px" }}>
-                <Card exercise={exercise} />
+                {" "}
+                <Link to={`/exercise/${exercise.id}`}>
+                  <Card exercise={exercise} />
+                </Link>
               </Grid.Column>
             ))
           )}

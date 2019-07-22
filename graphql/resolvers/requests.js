@@ -8,7 +8,9 @@ module.exports = {
       try {
         const request = await Request.find({
           recipients: { $elemMatch: { recipientId, isRequestClosed } }
-        }).sort({ createdAt: -1 });
+        })
+          .sort({ createdAt: -1 })
+          .populate("user");
         return request;
       } catch (err) {
         throw new Error(err);

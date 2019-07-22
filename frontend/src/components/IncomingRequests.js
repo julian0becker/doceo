@@ -72,6 +72,9 @@ const FETCH_REQUESTS_QUERY = gql`
       subject
       createdAt
       description
+      user {
+        id
+      }
     }
   }
 `;

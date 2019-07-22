@@ -20,6 +20,10 @@ module.exports = gql`
     isRequestClosed: Boolean!
   }
 
+  input RecipientExerciseInput {
+    recipientId: ID!
+  }
+
   input SentenceInput {
     sentence: String!
     translation: String!
@@ -73,6 +77,7 @@ module.exports = gql`
     recipients: [Recipient!]!
     createdAt: String
     language: String
+    user: User
   }
 
   input RegisterInput {
@@ -91,8 +96,8 @@ module.exports = gql`
     createExercise(
       subject: String!
       description: String
-      sentences: [SentenceInput]
-      recipients: [RecipientInput]
+      sentences: [SentenceInput!]!
+      recipients: [RecipientExerciseInput!]!
     ): Exercise!
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
