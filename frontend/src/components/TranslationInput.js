@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Icon, Segment } from "semantic-ui-react";
+import { Form, Button, Icon, Segment, Message } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 export default function TranslationInput({ data }) {
   const [fields, setFields] = useState([{ sentence: "", translation: "" }]);
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState(null);
   const [creatingExercise, { loading }] = useMutation(CREATE_EXERCISE, {
     variables: {
       subject: data.subject,
@@ -40,7 +42,21 @@ export default function TranslationInput({ data }) {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (fields.length < 1) {
+      setMessage("Input Missing.");
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return;
+    }
     creatingExercise();
+    setFields([{ sentence: "", translation: "" }]);
+    setMessage("Request has successfully been created.");
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 3000);
   };
 
   return (
@@ -72,12 +88,15 @@ export default function TranslationInput({ data }) {
             </Form.Group>
           );
         })}
-        <Button secondary type="button" onClick={handleAdd}>
-          <Icon name="add" />
-        </Button>
-        <Button disabled={loading} secondary type="submit">
-          Create Exercise
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button secondary type="button" onClick={handleAdd}>
+            <Icon name="add" /> Another Sentence
+          </Button>
+          {showMessage && <Message info content={message} />}
+          <Button disabled={loading} secondary type="submit">
+            Create Exercise
+          </Button>
+        </div>
       </Form>
     </Segment>
   );

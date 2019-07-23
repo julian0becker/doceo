@@ -49,6 +49,9 @@ export default function Request(props) {
         <Link to="/">
           <Button secondary>Back</Button>
         </Link>
+        <div style={{ textAlign: "center" }}>
+          <h2>{`Create Exercise for ${request[0].username}`}</h2>
+        </div>
         <div>
           <Button onClick={handleCloseRequest} secondary>
             Close Request
@@ -73,7 +76,6 @@ export default function Request(props) {
                 </Card.Header>
                 <Card.Meta>{moment(request[0].createdAt).fromNow()}</Card.Meta>
                 <Card.Description>
-                  <p>from {request[0].username}</p>
                   <p>{request[0].description}</p>
                 </Card.Description>
               </Card.Content>
@@ -81,9 +83,6 @@ export default function Request(props) {
           </div>
         </div>
         <div style={{ width: "100%", paddingLeft: "15px" }}>
-          <div style={{ textAlign: "center" }}>
-            <h2>Create Exercise</h2>
-          </div>
           <div
             style={{
               width: "100%",

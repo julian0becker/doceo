@@ -64,3 +64,18 @@ footer a {
 
 .request-flag {
 }
+
+.word {
+  border: 1px solid white;
+  padding: 5px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.dialogue {
+  margin: 15px 0;
+}
+
+.selected-dialogue-word {
+  background-color: green;
+}
