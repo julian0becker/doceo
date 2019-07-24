@@ -106,7 +106,7 @@ const CREATE_EXERCISE = gql`
   mutation(
     $subject: String!
     $description: String
-    $sentences: [SentenceInput!]!
+    $sentences: [SentenceInput]
     $recipients: [RecipientExerciseInput!]!
   ) {
     createExercise(

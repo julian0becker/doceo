@@ -46,7 +46,7 @@ export default function DialogueInputStepOne({
       }
     });
     values.forEach((value, idx) => {
-      value.position = idx;
+      value.line = idx + 1;
       value.sentence = value.sentence.trim();
     });
 

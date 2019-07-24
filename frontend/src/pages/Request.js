@@ -116,7 +116,7 @@ export default function Request(props) {
         </div>
       </Segment>
       {openTranslation && <TranslationInput data={request[0]} />}
-      {openDialogue && <DialogueInput />}
+      {openDialogue && <DialogueInput data={request[0]}/>}
     </div>
   );
 }

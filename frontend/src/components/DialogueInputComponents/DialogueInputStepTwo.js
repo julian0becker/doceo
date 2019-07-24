@@ -28,7 +28,7 @@ export default function DialogueInputStepTwo({
         if (innerChildNode.className === "word-box") {
           innerChildNode.childNodes.forEach(lastNode => {
             if (lastNode.className.includes("selected-dialogue-word")) {
-              data.push(lastNode.dataset);
+              data.push(Object.assign({}, lastNode.dataset));
             }
           });
         }

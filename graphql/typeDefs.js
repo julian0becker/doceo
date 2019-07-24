@@ -29,6 +29,23 @@ module.exports = gql`
     translation: String!
   }
 
+  input DialogueInput {
+    meta: [MetaInput]
+    dialogue: [InnerDialogueInput]
+  }
+
+  input MetaInput {
+    position: String
+    word: String
+    index: String
+  }
+
+  input InnerDialogueInput {
+    sentence: String
+    speaker: String
+    line: Int
+  }
+
   type Sentence {
     sentence: String!
     translation: String!
@@ -96,7 +113,8 @@ module.exports = gql`
     createExercise(
       subject: String!
       description: String
-      sentences: [SentenceInput!]!
+      sentences: [SentenceInput]
+      dialogue: DialogueInput
       recipients: [RecipientExerciseInput!]!
     ): Exercise!
     register(registerInput: RegisterInput): User!

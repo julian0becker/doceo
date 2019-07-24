@@ -6,6 +6,10 @@ const exerciseSchema = new Schema({
   username: String,
   recipients: [{ recipientId: { type: Schema.Types.ObjectId, ref: "User" } }],
   sentences: [{ sentence: String, translation: String }],
+  dialogue: {
+    meta: [{ position: String, word: String, index: String }],
+    dialogue: [{ sentence: String, speaker: String, line: Number }]
+  },
   createdAt: String,
   user: {
     type: Schema.Types.ObjectId,

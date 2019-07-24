@@ -18,7 +18,7 @@ module.exports = {
   Mutation: {
     async createExercise(
       _,
-      { subject, description, sentences, recipients },
+      { subject, description, sentences, dialogue, recipients },
       context
     ) {
       const { id, username } = checkAuth(context);
@@ -33,6 +33,7 @@ module.exports = {
         subject,
         description,
         sentences,
+        dialogue,
         recipients,
         createdAt: new Date().toISOString()
       });

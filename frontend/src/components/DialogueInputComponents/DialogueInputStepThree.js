@@ -1,13 +1,21 @@
 import React from "react";
-import { Button, Segment, Step } from "semantic-ui-react";
+import { Button, Segment, Step, Message } from "semantic-ui-react";
 
 export default function DialogueInputStepThree({
   setHandle,
   exerciseData,
-  fields
+  fields,
+  handleCreateExercise,
+  message,
+  showMessage,
+  disableSubmit,
+  setDisableSubmit,
+  setShowMessage
 }) {
   const handleGoBackToSelect = () => {
     setHandle(true);
+    setDisableSubmit(false);
+    setShowMessage(false);
   };
   return (
     <Segment inverted>
@@ -47,14 +55,25 @@ export default function DialogueInputStepThree({
         </div>
         <div>{`Problem word(s):`}</div>
         <ul>
-          {exerciseData.map(domString => (
+          {exerciseData.map(element => (
             <li>
-              <span>{`${domString.word} (line #${parseInt(domString.position) +
+              <span>{`${element.word} (line #${parseInt(element.position) +
                 1} `}</span>
-              <span>{`position #${parseInt(domString.index) + 1})`}</span>
+              <span>{`position #${parseInt(element.index) + 1})`}</span>
             </li>
           ))}
         </ul>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div />
+        {showMessage && <Message info content={message} />}
+        <Button
+          disabled={disableSubmit}
+          onClick={handleCreateExercise}
+          inverted
+        >
+          Create Exercise
+        </Button>
       </div>
     </Segment>
   );
