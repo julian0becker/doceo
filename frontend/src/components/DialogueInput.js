@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import DialogueInputStepOne from "./DialogueInputComponents/DialogueInputStepOne";
 import DialogueInputStepTwo from "./DialogueInputComponents/DialogueInputStepTwo";
 import DialogueInputStepThree from "./DialogueInputComponents/DialogueInputStepThree";
-import { set } from "mongoose";
+
 
 export default function DynamicInput({ data }) {
   const [fields, setFields] = useState([{ sentence: "" }, { sentence: "" }]);

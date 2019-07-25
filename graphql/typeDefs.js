@@ -7,7 +7,8 @@ module.exports = gql`
     description: String
     createdAt: String!
     username: String!
-    sentences: [Sentence!]!
+    sentences: [Sentence]
+    dialogue: Dialogue
     recipients: [Recipient!]
   }
   type Recipient {
@@ -34,6 +35,11 @@ module.exports = gql`
     dialogue: [InnerDialogueInput]
   }
 
+  type Dialogue {
+    meta: [Meta]
+    dialogue: [InnerDialogue]
+  }
+
   input MetaInput {
     position: String
     word: String
@@ -41,6 +47,18 @@ module.exports = gql`
   }
 
   input InnerDialogueInput {
+    sentence: String
+    speaker: String
+    line: Int
+  }
+
+  type Meta {
+    position: String
+    word: String
+    index: String
+  }
+
+  type InnerDialogue {
     sentence: String
     speaker: String
     line: Int

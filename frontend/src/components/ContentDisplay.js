@@ -56,6 +56,18 @@ const FETCH_EXERCISE_QUERY = gql`
         sentence
         translation
       }
+      dialogue {
+        meta {
+          position
+          word
+          index
+        }
+        dialogue {
+          sentence
+          speaker
+          line
+        }
+      }
     }
   }
 `;
