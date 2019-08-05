@@ -13,10 +13,6 @@ let answerArray;
 let answer = [];
 let answerString = null;
 
-let buttonText = 'Solve task first';
-let buttonClass = 'negative ui button';
-//Converting the Input to Array
-
  //console.log(initialData);
 
 // a little function to help us with reordering the result
@@ -51,28 +47,32 @@ const getListStyle = isDraggingOver => ({
   overflow: 'auto',
 });
 
-const handleClick = (e) => {
-    e.preventDefault();
-    if (fetchTask === answerString) {
-      console.log('Thats right');
-        buttonText = 'Next';
-        buttonClass = 'positive ui button';
-    } else {
-      console.log('Thats wrong');
-        buttonText = 'Wrong';
-        buttonClass = 'negative ui button';
-  }}
-
 export default class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: splitArray,
-      buttonText: buttonText,
-      buttonClass: buttonClass
+      buttonText: 'Solve task first',
+      buttonClass: 'negative ui button'
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
+
+  handleClick = (e) => {
+    e.preventDefault();
+    if (fetchTask === answerString) {
+      console.log('Thats right');
+      this.setState ({
+        buttonText: 'Next',
+        buttonClass: 'positive ui button'
+      });
+    } else {
+      console.log('Thats wrong');
+      this.setState ({
+        buttonText: 'Wrong',
+        buttonClass:'negative ui button'
+      });
+  }};
 
   //Will happen before HTML loads
   componentWillMount(){
@@ -89,9 +89,9 @@ export default class Task extends Component {
           id: `${Math.floor(Math.random() * (555000 - 100 +1)) + 100}`,
           content: `${element}`
         });
-        splitArrayCopy = [...splitArray];
       }
-      shuffleFunction(splitArrayCopy);
+      shuffleFunction(splitArray);
+      splitArrayCopy = [...splitArray];
       splitArray = [];
     }
 
@@ -134,11 +134,9 @@ export default class Task extends Component {
     //console.log(fetchTask);
     //console.log(answerString);
 
-    this.setState = {
-        items: splitArray,
-        buttonText: buttonText,
-        buttonClass: buttonClass
-      };
+    // this.setState ({
+    //     items: splitArray
+    //   });
   }
 
   onDragEnd(result) {
@@ -197,7 +195,7 @@ export default class Task extends Component {
             <p className="Task-Translation-Header">Translation:</p>
             <p className="Task-Translation">{fetchTranslation}</p>
             <br></br>
-            <button className="ui button" onClick={handleClick}>
+            <button className="ui button" onClick={this.handleClick}>
             Submit
           </button>
           <button className={this.state.buttonClass}>{this.state.buttonText}</button>
