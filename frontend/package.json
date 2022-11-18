@@ -17,7 +17,7 @@
     "react-flags-select": "^1.1.10",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-select": "^3.0.4",
     "react-select-country-list": "^2.0.1",
     "semantic-ui-css": "^2.4.1",
